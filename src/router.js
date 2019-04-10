@@ -1,7 +1,7 @@
-//strict mode
+// strict mode
 'use strict';
 
-//connecting the required libraries etc.
+// connecting the required libraries etc.
 let express = require('express'),
 	router = express.Router(),
 	sqlite3 = require('sqlite3').verbose(),
@@ -13,7 +13,7 @@ let express = require('express'),
 router.use(methodOverride('_method'));
 
 ///////////////////////// AUTHENTICATION ROUTES //////////////////////////
-//REGISTER ROUTE
+// REGISTER ROUTE
 router.get('/register', (req, res, err) => {
 	try {
 		res.render('authentication/register');
@@ -21,7 +21,7 @@ router.get('/register', (req, res, err) => {
 		res.render('errorPage');
 	}
 });
-//TODO: add the user to the db, then continue to secret INDEX page
+// TODO: add the user to the db, then continue to secret INDEX page
 
 // LOGIN ROUTE
 router.get('/login', (req, res, err) => {
@@ -35,8 +35,8 @@ router.get('/login', (req, res, err) => {
 //if not, then refresh the login page
 
 ///////////////////////// BOOK ROUTES //////////////////////////
-//LANDING PAGE
-//INDEX route
+// LANDING PAGE
+// INDEX route
 router.get('/', (req, res, err) => {
 	try {
 		res.render('books/landing');
@@ -45,8 +45,8 @@ router.get('/', (req, res, err) => {
 	}
 });
 
-//SEE ALL BOOKS
-//INDEX route
+// SEE ALL BOOKS
+// INDEX route
 router.get('/books', (req, res) => {
 	db.all('SELECT * FROM books', (err, bookData) => {
 		if (err) next(err);
@@ -58,8 +58,8 @@ router.get('/books', (req, res) => {
 	});
 });
 
-//ADD A NEW BOOK
-//NEW route - shows the new book form
+// ADD A NEW BOOK
+// NEW route - shows the new book form
 router.get('/books/new', (req, res, err) => {
 	try {
 		res.render('books/newBookForm');
@@ -68,7 +68,7 @@ router.get('/books/new', (req, res, err) => {
 	}
 });
 
-//CREATE route - creates the new book and redirects to all books page
+// CREATE route - creates the new book and redirects to all books page
 router.post('/books', urlencodedParser, (req, res) => {
 	db.run(
 		'INSERT INTO books(title, author_fname, author_lname, category, release_year, pages, price, picture) VALUES(?, ?, ?, ?, ?, ?, ?, ?)',
@@ -91,8 +91,8 @@ router.post('/books', urlencodedParser, (req, res) => {
 	);
 });
 
-//SEE BOOK DETAILS AND COMMENTS
-//SHOW route
+// SEE BOOK DETAILS AND COMMENTS
+// SHOW route
 router.get('/books/:id', urlencodedParser, (req, res) => {
 	db.all('SELECT * FROM books WHERE book_id =?', [ req.params.id ], (err, bookData) => {
 		if (err) next(err);
@@ -104,8 +104,8 @@ router.get('/books/:id', urlencodedParser, (req, res) => {
 	});
 });
 
-//UPDATE A CURRENT BOOK
-//EDIT route - shows the edit book form
+// UPDATE A CURRENT BOOK
+// EDIT route - shows the edit book form
 router.get('/books/:id/edit', urlencodedParser, (req, res) => {
 	db.all('SELECT * FROM books WHERE book_id =?', [ req.params.id ], (err, bookData) => {
 		if (err) next(err);
@@ -117,7 +117,7 @@ router.get('/books/:id/edit', urlencodedParser, (req, res) => {
 	});
 });
 
-//UPDATE route - updates the book and redirects to book details page
+// UPDATE route - updates the book and redirects to book details page
 router.put('/books/:id', urlencodedParser, (req, res) => {
 	db.run(
 		'UPDATE books SET title =?, author_fname=?, author_lname=?, category=?, release_year=?, pages=?, price=?, picture=? WHERE book_id=?',
@@ -141,8 +141,8 @@ router.put('/books/:id', urlencodedParser, (req, res) => {
 	);
 });
 
-//DELETE A CURRENT BOOK
-//DELETE route - deletes the book and redirects to all books page
+// DELETE A CURRENT BOOK
+// DELETE route - deletes the book and redirects to all books page
 router.delete('/books/:id', urlencodedParser, (req, res) => {
 	db.run('DELETE FROM books WHERE book_id =?', [ req.params.id ], (err) => {
 		if (err) next(err);
@@ -152,10 +152,10 @@ router.delete('/books/:id', urlencodedParser, (req, res) => {
 	});
 });
 
-//Design purposes only - error page
+// Design purposes only - error page
 router.get('/oops', (req, res) => {
 	res.render('errorPage');
 });
 
-//export
+// export
 module.exports = router;
