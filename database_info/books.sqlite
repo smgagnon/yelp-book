@@ -1,3 +1,5 @@
+// Comments below
+
 CREATE TABLE books 
     (
         book_id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,
