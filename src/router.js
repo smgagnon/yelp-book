@@ -1,3 +1,5 @@
+// Comments below
+
 //strict mode
 'use strict';
 
